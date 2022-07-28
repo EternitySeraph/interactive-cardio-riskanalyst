@@ -28,6 +28,8 @@ import plotly.figure_factory as ff
 
 import xgboost
 
+heart_data = pd.read_csv('/kaggle/input/heart-failure-clinical-data/heart_failure_clinical_records_dataset.csv')
+
 fig = px.violin(heart_data, y="age", x="smoking", color="DEATH_EVENT", box=True, points="all", hover_data=heart_data.columns)
 fig.update_layout(title_text="Analysis in Age and Smoking on Survival Status")
 fig.show()
