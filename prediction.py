@@ -26,7 +26,7 @@ import plotly.figure_factory as ff
 
 %matplotlib inline
 
-import xgboost
+from sklearn.linear_model import LogisticRegression
 
 heart_data = pd.read_csv('/kaggle/input/heart-failure-clinical-data/heart_failure_clinical_records_dataset.csv')
 
@@ -39,13 +39,14 @@ fig.update_layout(title_text="Analysis in Age and Diabetes on Survival Status")
 fig.show()
 
 
-Features = ['anemia','hypertension','serum_creatinine']
+Features = [ 'anaemia', 'high_blood_pressure', 'age']
 x = heart_data[Features]
 y = heart_data["DEATH_EVENT"]
 x_train,x_test,y_train,y_test = train_test_split(x,y, test_size=0.2, random_state=2)
 
+# logistic regression
 
-xgb_clf = xgboost.XGBRFClassifier(max_depth=3, random_state=1)
-xgb_clf.fit(x_train,y_train)
-xgb_pred = xgb_clf.predict(x_test)
-xgb_acc = accuracy_score(y_test, xgb_pred)
+log_reg = LogisticRegression()
+log_reg.fit(x_train, y_train)
+log_reg_pred = log_reg.predict(x_test)
+log_reg_acc = accuracy_score(y_test, log_reg_pred)
