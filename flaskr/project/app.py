@@ -1,6 +1,6 @@
 import sqlite3
 
-from flask import Flask, g
+from flask import Flask, g, render_template
 
 
 #configuration
@@ -44,10 +44,14 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-# on home page, prints Hello, World! onto page...
-@app.route("/")
-def hello():
-  return "Hello, World!"
+# on home page, prints database entries onto page...
+@app.route('/')
+def index():
+    """Searches the database for entries, then displays them."""
+    db = get_db()
+    cur = db.execute('select * from entries order by id desc')
+    entries = cur.fetchall()
+    return render_template('index.html', entries=entries)
 
 if __name__ == "__main__":
    app.run()
