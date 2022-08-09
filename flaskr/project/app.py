@@ -2,6 +2,17 @@ import sqlite3
 
 from flask import Flask, g
 
+
+#configuration
+DATABASE = "flask.db"
+
+# create and init new flask app
+app = Flask(__name__)
+
+# load config
+app.config.from_object(__name__)
+
+
 # connect to database
 def connect_db():
     """Connects to the database."""
@@ -32,14 +43,6 @@ def close_db(error):
     if hasattr(g, "sqlite_db"):
         g.sqlite_db.close()
 
-#configuration
-DATABASE = "flask.db"
-
-# create and init new flask app
-app = Flask(__name__)
-
-# load config
-app.config.from_object(__name__)
 
 # on home page, prints Hello, World! onto page...
 @app.route("/")
