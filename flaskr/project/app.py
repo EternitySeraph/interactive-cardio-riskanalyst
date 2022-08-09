@@ -3,6 +3,7 @@ from flask import Flask
 # create and init new flask app
 app = Flask(__name__)
 
+# on home page, prints Hello, World! onto page...
 @app.route("/")
 def hello():
   return "Hello, World!"
