@@ -42,10 +42,10 @@ db = SQLAlchemy(app)
 from project import models
 
 
-# on home page, prints Hello, World! onto page...
+# on home page, uses base as template
 @app.route('/')
 def index():
-    return "Hello, World!"
+    return render_template("base.html")
 
 if __name__ == "__main__":
    app.run()
