@@ -8,7 +8,8 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
-        # path where the SQLite database file will be saved. It’s under app.instance_path, which is the path that Flask has chosen for the instance folder. 
+        # path where the SQLite database file will be saved. It’s under app.instance_path,
+        # which is the path that Flask has chosen for the instance folder.
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
 
