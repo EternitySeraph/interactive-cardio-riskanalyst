@@ -25,12 +25,10 @@ db = SQLAlchemy(app)
 from project import models
 
 
-# on home page, prints database entries onto page...
+# on home page, prints Hello, World! onto page...
 @app.route('/')
 def index():
-    """Searches the database for entries, then displays them."""
-    entries = db.session.query(models.Post)
-    return render_template('index.html', entries=entries)
+    return "Hello, World!"
 
 if __name__ == "__main__":
    app.run()
