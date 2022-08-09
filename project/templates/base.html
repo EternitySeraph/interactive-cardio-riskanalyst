@@ -1,5 +1,5 @@
 <!doctype html>
-<title>Example</title>
+<title>Cardiovascular Risk Analysis</title>
 <style>
 * {
   box-sizing: border-box; 
@@ -9,6 +9,7 @@ body {
   min-height: 100vh;
   flex-direction: column;
   margin: 0;
+  background: #ADBABD
 }
 #main {
   display: flex;
@@ -19,21 +20,29 @@ body {
 }
 #main > nav, 
 #main > aside {
-  flex: 0 0 20vw;
-  background: beige;
+  flex: 0 0 30vw;
+  background: #575D90;
 }
 #main > nav {
   order: -1;
 }
 header, footer {
-  background: yellowgreen;
-  height: 20vh;
+  background: #91B7C7;
+  height: 10vh;
 }
 header, footer, article, nav, aside {
   padding: 1em;
 }
 </style>
 <body>
+  <header><h3>Enter Patient Information</h3></header>
+  <div id="main">
+    <article>Article</article>
+    <nav>Nav</nav>
+    <aside>Aside</aside>
+  </div>
+  <footer>Footer</footer>
+</body>
   <header>Header</header>
   <div id="main">
     <article>Article</article>
