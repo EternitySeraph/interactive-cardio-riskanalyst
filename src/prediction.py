@@ -44,8 +44,38 @@ def generate_table(dataframe, max_rows=10):
         ])
     ])
 
-# assigning webpage attribute
-app = Dash(__name__)
+# assigning webpage attribute with multiple pages
+app = Dash(__name__, use_pages=True)
+
+#naming paths, titles, and names of the current page
+dash.register_page(
+    __name__,
+    path='/',
+    title='ICRA Main Page',
+    name='Interactive Cardiac Health Risk Analysis Main Page'
+)
+
+# app layout for main page
+app.layout = html.Div([
+	html.H1('Interactive Cardio Risk Analysis'),
+
+    html.Div(
+        [
+            html.Div(
+                dcc.Link(
+                    f"{page['name']}", href=page["relative_path"]
+                )
+            )
+            for page in dash.page_registry.values()
+        ]
+    ),
+
+	dash.page_container
+])
+
+# runs this page
+if __name__ == '__main__':
+	app.run_server(debug=True)
 
 # graph depicts data points as age and smoking as chance of death event
 fig = px.violin(heart_data, y="age", x="smoking", color="DEATH_EVENT", box=True, points="all", hover_data=heart_data.columns)
@@ -65,48 +95,66 @@ app.layout = html.Div([
 
 # age text input
 html.Label('Age:'),
-        dcc.Input(value=' ', type='number'),
+        dcc.Input(value='40', type='number', id='age'),
 
 # sex radio selection
 html.Label('Sex:'),
-        dcc.RadioItems(['Male', 'Female'], 'Female'),
+        dcc.RadioItems(['Male', 'Female'], 'Female', inline=True, id='sex'),
     ], style={'padding': 10, 'flex': 1}),
     
 # aneamia radio selection
 html.Label('Aneamia:'),
-        dcc.RadioItems(['Yes', 'No'], 'No'),
+        dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='aneamia'),
     ], style={'padding': 10, 'flex': 1}),
 
 # high blood pressure radio selection
 html.Label('Hypertension:'),
-        dcc.RadioItems(['Yes', 'No'], 'No'),
+        dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='hypertension'),
     ], style={'padding': 10, 'flex': 1}),
 
 # creatine phosphokinase text input or slider?
 html.Label('Creatine Phosphokinase (mcg/L):')
 dcc.Slider(
+            id='creatine-phos'
             min=0,
             max=1200,
             marks={i: f'{i}' if i % 10 == 0 && i < 500 else if i % 100 == 0 for i in range(10, 1200)},
-            value=5,
+            value=100,
         )
 
 # platelets text input or slider?
 html.Label('Platelet Count:')
 dcc.Slider(
+            id='platelets'
             min=20000,
             max=850000,
-            marks={i: f'{i}' if i % 500 == 0 else str(i) for i in range(20000, 850000)},
+            marks={i: f'{i}' if i % 500 == 0 for i in range(20000, 850000)},
             value=5,
         )
+
 # serum sodium text input or slider?
 html.Label('Serum Sodium (mEq/L):')
 dcc.Slider(
+            id='sodium'
             min=100,
             max=200,
             marks={i: f'{i}' if i % 10 == 0 for i in range(100, 200)},
             value=5,
         )
+
+# add a button to update chart
+html.Button('Submit', id='button-update')
+
+@app.callback(
+    dash.dependencies.Output('graph-prediction', 'prediction'),
+    [dash.dependencies.Input('age', 'value')], [dash.dependencies.Input('anaemia', 'value')],
+    [dash.dependencies.Input('creatine-phos', 'value')]
+    [dash.dependencies.State('input-box', 'value')])
+def update_prediction(n_clicks, value):
+    return 'The input value was "{}" and the button has been clicked {} times'.format(
+        value,
+        n_clicks
+    )
 
 # training and testing data sets from targeted features to predict death event
 Features = [ 'anaemia', 'high_blood_pressure', 'age']
