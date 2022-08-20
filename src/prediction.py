@@ -78,7 +78,8 @@ if __name__ == '__main__':
 	app.run_server(debug=True)
 	
 # graph (heatmap) depicts all columns and their correlations
-px.imshow(heart_data.corr(), title="Correlation Heat Map of Heart Failure")
+px.imshow(heart_data.corr(), title="Correlation Heat Map of Heart Failure", text_auto=True, 
+	  aspect="auto")
 
 # graph depicts data points as age and smoking as chance of death event
 fig = px.violin(heart_data, y="age", x="smoking", color="DEATH_EVENT", box=True, points="all", hover_data=heart_data.columns)
