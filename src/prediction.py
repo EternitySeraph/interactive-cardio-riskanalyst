@@ -76,6 +76,9 @@ app.layout = html.Div([
 # runs this page
 if __name__ == '__main__':
 	app.run_server(debug=True)
+	
+# graph (heatmap) depicts all columns and their correlations
+px.imshow(df.corr(),title="Correlation Plot of the Heat Failure Prediction")
 
 # graph depicts data points as age and smoking as chance of death event
 fig = px.violin(heart_data, y="age", x="smoking", color="DEATH_EVENT", box=True, points="all", hover_data=heart_data.columns)
