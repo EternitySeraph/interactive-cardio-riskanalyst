@@ -15,6 +15,8 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 
+from src import create_main_dash
+
 
 basedir = Path(__file__).resolve().parent
 
@@ -45,7 +47,7 @@ from project import models
 # on home page, uses base as template
 @app.route('/')
 def index():
-    return render_template("base.html")
+    return create_main_dash(app)
 
 if __name__ == "__main__":
    app.run()
