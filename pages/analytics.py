@@ -2,7 +2,7 @@ import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
 import plotly.express as px
 
-from dash import html, dash
+from dash import html, dcc
 import dash
 
 # all records in the csv file
@@ -36,6 +36,7 @@ fig2.update_layout(title_text="Analysis in Age and Diabetes on Survival Status")
 # dash register pages by its name, override path
 dash.register_page(__name__, path='/analytics')
 
+# web page design
 layout = html.Div([
     # generates table of first ten rows from csv data points
     html.H4(children='Patient Data of Cardiac Patients'),
@@ -44,7 +45,13 @@ layout = html.Div([
     px.imshow(heart_data.corr(), title="Correlation Heat Map of Heart Failure", text_auto=True,
               aspect="auto"),
     # graph depicts data points as age and smoking as chance of death event
-    fig1.show(),
+    dcc.Graph(
+        id='fig1',
+        figure=fig1
+    ),
     # graph depicts data points as age and diabetes as chance of death event
-    fig2.show()
+    dcc.Graph(
+        id='fig2',
+        figure=fig2
+    )
 ])

@@ -1,6 +1,6 @@
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
-from dash import dcc, html, dash, callback
+from dash import dcc, html, callback
 import dash
 
 from sklearn.model_selection import train_test_split
@@ -28,21 +28,29 @@ layout = html.Div([
     # form to make prediction
     html.H4(children='Input Patient Data for Prediction'),
 
-    # age text input
-    html.Label('Age:'),
-    dcc.Input(value='40', type='number', id='age'),
+    html.Div(children=[
+        # age text input
+        html.Label('Age:'),
+        dcc.Input(value='40', type='number', id='age')
+    ]),
 
-    # sex radio selection
-    html.Label('Sex:'),
-    dcc.RadioItems(['Male', 'Female'], 'Female', inline=True, id='sex'),
+    html.Div(children=[
+        # sex radio selection
+        html.Label('Sex:'),
+        dcc.RadioItems(['Male', 'Female'], 'Female', inline=True, id='sex')
+    ]),
 
-    # anaemia radio selection
-    html.Label('Anaemia:'),
-    dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='anaemia'),
+    html.Div(children=[
+        # anaemia radio selection
+        html.Label('Anaemia:'),
+        dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='anaemia')
+    ]),
 
-    # high blood pressure radio selection
-    html.Label('Hypertension:'),
-    dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='hypertension'),
+    html.Div(children=[
+        # high blood pressure radio selection
+        html.Label('Hypertension:'),
+        dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='hypertension')
+    ]),
 
     # creatine phosphokinase text input or slider?
     html.Label('Creatine Phosphokinase (mcg/L):'),
@@ -74,15 +82,3 @@ layout = html.Div([
     # add a button to update chart
     html.Button('Submit', id='button-update')
 ])
-
-
-@callback(
-    dash.dependencies.Output('graph-prediction', 'prediction'),
-    [dash.dependencies.Input('age', 'value')], [dash.dependencies.Input('anaemia', 'value')],
-    [dash.dependencies.Input('creatine-phos', 'value')],
-    [dash.dependencies.State('input-box', 'value')])
-def update_prediction(n_clicks, value):
-    return 'The input value was "{}" and the button has been clicked {} times'.format(
-        value,
-        n_clicks
-    )
