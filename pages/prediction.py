@@ -1,23 +1,13 @@
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
-import os
-
-import dash_core_components as dcc
-import dash_html_components as html
-
-from dash import dash, callback
+from dash import dcc, html, dash, callback
+import dash
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
-# %matplotlib inline
-
-for dirname, _, filenames in os.walk('/kaggle/input'):
-    for filename in filenames:
-        print(os.path.join(dirname, filename))
-
 # all records in the csv file
-heart_data = pd.read_csv('/kaggle/input/heart-failure-clinical-data/heart_failure_clinical_records_dataset.csv')
+heart_data = pd.read_csv('heart_failure_clinical_records_dataset.csv')
 
 # training and testing data sets from targeted features to predict death event
 Features = ['anaemia', 'high_blood_pressure', 'age']
@@ -30,7 +20,10 @@ log_reg = LogisticRegression()
 log_reg.fit(x_train, y_train)
 log_reg_pred = log_reg.predict(x_test)
 
-# web page design
+# dash register pages by its name, override path
+dash.register_page(__name__, path='/predictions')
+
+# web pages design
 layout = html.Div([
     # form to make prediction
     html.H4(children='Input Patient Data for Prediction'),

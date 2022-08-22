@@ -1,41 +1,24 @@
-import os
-from pathlib import Path
+from dash import Dash, html, dcc
+import dash
 
-from flask import (
-    Flask,
-)
-from flask_sqlalchemy import SQLAlchemy
+app = Dash(__name__, use_pages=True)
 
-from src import create_main_dash
+app.layout = html.Div([
+    html.H1('Interactive Cardio Risk Analysis'),
 
-basedir = Path(__file__).resolve().parent
+    html.Div(
+        [
+            html.Div(
+                dcc.Link(
+                    f"{page['name']}", href=page["relative_path"]
+                )
+            )
+            for page in dash.page_registry.values()
+        ]
+    ),
 
-# configuration
-DATABASE = "flaskr.db"
-USERNAME = "admin"
-PASSWORD = "admin"
-SECRET_KEY = "change_me"
-url = os.getenv("DATABASE_URL", f"sqlite:///{Path(basedir).joinpath(DATABASE)}")
+    dash.page_container
+])
 
-if url.startswith("postgres://"):
-    url = url.replace("postgres://", "postgresql://", 1)
-
-SQLALCHEMY_DATABASE_URI = url
-SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-# create and init new flask app
-app = Flask(__name__)
-# load config
-app.config.from_object(__name__)
-# init sqlalchemy
-db = SQLAlchemy(app)
-
-
-# on home page, uses base as template
-@app.route('/')
-def index():
-    return create_main_dash(app)
-
-
-if __name__ == "__main__":
-    app.run()
+if __name__ == '__main__':
+    app.run_server(debug=True)

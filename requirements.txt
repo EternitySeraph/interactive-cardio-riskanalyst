@@ -1,22 +1,12 @@
 # ----------------------
-# Flask
-# ----------------------
-Flask==2.2.2
-Flask-SQLAlchemy==2.5.1
-
-# ----------------------
 # Dash
 # ----------------------
-dash
-dash_html_components
-dash_core_components
-dash_html_components
+dash>=2.5.1
 
 # ----------------------
 # Testing
 # ----------------------
 pytest==7.1.2
-setuptools
 
 # ----------------------
 # Production Server

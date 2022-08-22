@@ -1,20 +1,12 @@
 import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
-import os
-
 import plotly.express as px
 
-import dash_html_components as html
-from dash import dash
-
-for dirname, _, filenames in os.walk('/kaggle/input'):
-    for filename in filenames:
-        print(os.path.join(dirname, filename))
-
-dash.register_page(__name__, path='/analytics')
+from dash import html, dash
+import dash
 
 # all records in the csv file
-heart_data = pd.read_csv('/kaggle/input/heart-failure-clinical-data/heart_failure_clinical_records_dataset.csv')
+heart_data = pd.read_csv('heart_failure_clinical_records_dataset.csv')
 
 
 # reusable table gen component (first 10 rows)
@@ -40,6 +32,9 @@ fig1.update_layout(title_text="Analysis in Age and Smoking on Survival Status")
 fig2 = px.violin(heart_data, y="age", x="diabetes", color="DEATH_EVENT", box=True, points="all",
                  hover_data=heart_data.columns)
 fig2.update_layout(title_text="Analysis in Age and Diabetes on Survival Status")
+
+# dash register pages by its name, override path
+dash.register_page(__name__, path='/analytics')
 
 layout = html.Div([
     # generates table of first ten rows from csv data points
