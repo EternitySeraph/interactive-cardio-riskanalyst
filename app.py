@@ -15,8 +15,6 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 
-from project import models
-
 from src import create_main_dash
 
 basedir = Path(__file__).resolve().parent
