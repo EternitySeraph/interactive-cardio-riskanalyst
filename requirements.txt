@@ -5,6 +5,11 @@ Flask==2.2.2
 Flask-SQLAlchemy==2.5.1
 
 # ----------------------
+# Dash
+# ----------------------
+dash
+
+# ----------------------
 # Testing
 # ----------------------
 pytest==7.1.2
@@ -13,3 +18,14 @@ pytest==7.1.2
 # Production Server
 # ----------------------
 gunicorn==20.1.0
+
+# ----------------------
+# Machine Learning Tools
+# ----------------------
+pandas
+numpy
+sklearn
+plotly
+matplotlib
+
+colorama

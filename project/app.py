@@ -15,8 +15,9 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 
-from src import create_main_dash
+from project import models
 
+from src import create_main_dash
 
 basedir = Path(__file__).resolve().parent
 
@@ -33,7 +34,6 @@ if url.startswith("postgres://"):
 SQLALCHEMY_DATABASE_URI = url
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
 # create and init new flask app
 app = Flask(__name__)
 # load config
@@ -41,13 +41,12 @@ app.config.from_object(__name__)
 # init sqlalchemy
 db = SQLAlchemy(app)
 
-from project import models
-
 
 # on home page, uses base as template
 @app.route('/')
 def index():
     return create_main_dash(app)
 
+
 if __name__ == "__main__":
-   app.run()
+    app.run()
