@@ -22,5 +22,5 @@ def create_main_dash(flask_app):
 		dash.page_container
 	]
 	)
-	)
+	
 	return dash_app
