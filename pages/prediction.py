@@ -67,7 +67,7 @@ layout = html.Div([
         id='platelets',
         min=20000,
         max=850000,
-        step=500
+        step=1000
     ),
 
     # serum sodium text input or slider?
