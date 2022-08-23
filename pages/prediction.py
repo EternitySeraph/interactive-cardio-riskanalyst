@@ -32,25 +32,25 @@ layout = html.Div([
         # age text input
         html.Label('Age:'),
         dcc.Input(value='40', type='number', id='age')
-    ]),
+    ], style={'padding': 10, 'flex': 1}),
 
     html.Div(children=[
         # sex radio selection
         html.Label('Sex:'),
         dcc.RadioItems(['Male', 'Female'], 'Female', inline=True, id='sex')
-    ]),
+    ], style={'padding': 10, 'flex': 1}),
 
     html.Div(children=[
         # anaemia radio selection
         html.Label('Anaemia:'),
         dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='anaemia')
-    ]),
+    ], style={'padding': 10, 'flex': 1}),
 
     html.Div(children=[
         # high blood pressure radio selection
         html.Label('Hypertension:'),
         dcc.RadioItems(['Yes', 'No'], 'No', inline=True, id='hypertension')
-    ]),
+    ], style={'padding': 10, 'flex': 1}),
 
     # creatine phosphokinase text input or slider?
     html.Label('Creatine Phosphokinase (mcg/L):'),
