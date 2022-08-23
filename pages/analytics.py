@@ -2,6 +2,8 @@ import pandas as pd  # data processing, CSV file I/O (e.g. pd.read_csv)
 
 import plotly.express as px
 
+import plotly.figure_factory as ff
+
 from dash import html, dcc, dash_table, callback
 from dash.dependencies import Input, Output
 import dash
@@ -15,6 +17,9 @@ dash.register_page(__name__)
 # graph (heatmap) depicts all columns and their correlations
 fig_corr = px.imshow(heart_data.corr(), title="Correlation Heat Map of Heart Failure", text_auto=True,
                      aspect="auto")
+
+fig_dist = ff.create_distplot(heart_data, 'age')
+fig_dist.update_layout(title_text='Age Distribution plot')
 
 # web page design
 layout = html.Div([
@@ -31,6 +36,8 @@ layout = html.Div([
 
     # graph (heatmap) depicts all columns and their correlations
     dcc.Graph(figure=fig_corr),
+
+    dcc.Graph(figure=fig_dist),
 
     # dropdown changes graph to depict data points corresponding to death event
     html.H4(children='Relation of Diabetes and Smoking to Survival Rate'),
