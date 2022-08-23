@@ -19,6 +19,3 @@ gunicorn==20.1.0
 pandas
 sklearn
 plotly
-matplotlib
-
-colorama
