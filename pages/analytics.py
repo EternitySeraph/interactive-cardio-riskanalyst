@@ -15,11 +15,17 @@ heart_data = pd.read_csv('heart_failure_clinical_records_dataset.csv')
 dash.register_page(__name__)
 
 # graph (heatmap) depicts all columns and their correlations
-fig_corr = px.imshow(heart_data.corr(), title="Correlation Heat Map of Heart Failure", text_auto=True,
-                     aspect="auto")
+fig_corr = px.imshow(heart_data.corr(), title="Cardiac Risk Factor Correlation Heat Map", text_auto=True, aspect="auto")
 
-fig_dist = ff.create_distplot(heart_data, 'age')
-fig_dist.update_layout(title_text='Age Distribution plot')
+# graph (distribution plot) shows death event by age
+surv = heart_data[heart_data["DEATH_EVENT"]==0]["age"]
+not_surv = heart_data[heart_data["DEATH_EVENT"]==1]["age"]
+
+hist_data = [surv,not_surv]
+group_labels = ['Survived', 'Not Survived']
+
+fig_dist = ff.create_distplot(hist_data, group_labels, bin_size=0.5)
+fig_dist.update_layout(title_text="Analysis of Age on Survival Status")
 
 # web page design
 layout = html.Div([
@@ -37,10 +43,11 @@ layout = html.Div([
     # graph (heatmap) depicts all columns and their correlations
     dcc.Graph(figure=fig_corr),
 
+    # graph (distribution plot) shows death event by age
     dcc.Graph(figure=fig_dist),
 
     # dropdown changes graph to depict data points corresponding to death event
-    html.H4(children='Relation of Diabetes and Smoking to Survival Rate'),
+    html.H4(children='Analysis of Diabetes and Smoking to Survival Rate'),
     dcc.Dropdown(id='u_drop',
                  options=[
                      {'label': 'Diabetes', 'value': 'diabetes'},
