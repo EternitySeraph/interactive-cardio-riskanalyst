@@ -95,14 +95,16 @@ layout = html.Div([
     html.Div([html.Button('Submit', id='button-update')], style={'padding': 10, 'flex': 1}),
 
     # field to be updated by button-update with Low/High/Very High Risk
-    html.Div([dcc.Input(value='Estimated Risk', type='text', id='u_pred', readOnly=True)], style={'padding': 10, 'flex': 1})
+    html.Div([dcc.Input(value='Estimated Risk', type='text', id='u_sum', readOnly=True),
+              dcc.Input(value='Predicted Condition', type='text', id='u_pred', readOnly=True)],
+             style={'padding': 10, 'flex': 1})
 ])
 
 
 # OUTPUT = u_pred, read only text field, Low/High/Very High Risk
 # INPUT = age, anaemia, hypertension,
 @callback(
-    Output(component_id='u_pred', component_property='value'),
+    Output(component_id='u_sum', component_property='value'),
     Input('button-update', 'n_clicks'),
     # main values
     State(component_id='anaemia', component_property='value'),
@@ -134,3 +136,26 @@ def update_pred(n_clicks, anaemia, hypertension, age, creatine_phos, sex, platel
                 return 'Low Risk'  # no risk
     else:
         return 'Very High Risk'  # prediction indicates high risk
+
+
+# OUTPUT = u_pred, read only text field, Low/High/Very High Risk
+# INPUT = age, anaemia, hypertension,
+@callback(
+    Output(component_id='u_pred', component_property='value'),
+    Input('button-update', 'n_clicks'),
+    # main values
+    State(component_id='anaemia', component_property='value'),
+    State(component_id='hypertension', component_property='value'),
+    State(component_id='age', component_property='value')
+)
+# Features = ['anaemia', 'high_blood_pressure', 'age']
+def update_pred(n_clicks, anaemia, hypertension, age):
+    xnew = pd.DataFrame({'anaemia': [int(anaemia)],
+                         'high_blood_pressure': [int(hypertension)],
+                         'age': [int(age)]})
+    ynew = log_reg.predict(xnew)
+
+    if ynew == [0]:
+        return 'Mild Condition'  # prediction indicates low risk
+    else:
+        return 'Fatal Condition'  # prediction indicates high risk
