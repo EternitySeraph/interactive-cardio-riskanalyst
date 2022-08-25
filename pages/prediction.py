@@ -32,7 +32,7 @@ layout = html.Div([
     html.Div([
         # age text input
         html.Label('Age:'),
-        dcc.Input(value='40', type='number', id='age', required=True)
+        dcc.Input(value='40', type='number', id='age', min=0, max=200, required=True)
     ], style={'padding': 10, 'flex': 1}),
 
     # sex, default value = female (1), radio items (2)
